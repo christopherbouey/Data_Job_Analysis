@@ -28,14 +28,14 @@ def insert_values(conn, df, table):
 def load_jobs():
 
   today_date = datetime.today().strftime('%Y_%m_%d')
-  df = pd.read_csv(f'/opt/airflow/dags/data/LIJobs_working.csv')
+  df = pd.read_csv(f'/opt/airflow/dags/data/LIJobs_final.csv')
 
   username = 'airflow'
   password = 'airflow'
   host = 'postgres'
   database = 'airflow'
 
-  table_name = 'job_listings_test_pipe'
+  table_name = 'job_listings'
 
   connection = psycopg2.connect(
     user=username,
@@ -59,6 +59,30 @@ def load_jobs():
     TYPE TEXT,
     INDUSTRY TEXT,
     LINK TEXT,
+    SALARY_RANGE TEXT,
+    SALARY_AVG FLOAT,
+    DATA_ARCHITECTURE BOOL NOT NULL,
+    ETL BOOL NOT NULL,
+    BIG_DATA BOOL NOT NULL,
+    PYTHON BOOL NOT NULL,
+    R BOOL NOT NULL,
+    JAVA BOOL NOT NULL,
+    SQL BOOL NOT NULL,
+    HADOOP BOOL NOT NULL,
+    BIGQUERY BOOL NOT NULL,
+    KAFKA BOOL NOT NULL,
+    SPARK BOOL NOT NULL,
+    HIVE BOOL NOT NULL,
+    AWS BOOL NOT NULL,
+    LAMBDA BOOL NOT NULL,
+    REDSHIFT BOOL NOT NULL,
+    S3 BOOL NOT NULL,
+    VPC BOOL NOT NULL,
+    EC2 BOOL NOT NULL,
+    KUBERNETES BOOL NOT NULL,
+    GCP BOOL NOT NULL,
+    TABLEAU BOOL NOT NULL,
+    LOOKER BOOL NOT NULL,
     PRIMARY KEY (CREATE_DATE, ID)
     ) PARTITION BY LIST (CREATE_DATE);
   ''' % table_name

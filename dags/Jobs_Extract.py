@@ -136,7 +136,7 @@ def job_extraction():
   options.add_argument('--ignore-certificate-errors')
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--no-sandbox')
-  options.add_argument('-headless')
+  # options.add_argument('-headless')
   options.add_argument('window-size=2000x1500')
   # Set driver loc and initiate Chrome Driver
   remote_webdriver = 'remote_chromedriver'
@@ -150,5 +150,5 @@ def job_extraction():
     jobs_df = LI_scrape_jobs(wd, jobs)
     jobs_df.to_csv(f'/opt/airflow/dags/data/LIJobs_working.csv', index=False)
 
-if __name__=='__main__':
+if __name__== '__main__':
   job_extraction()

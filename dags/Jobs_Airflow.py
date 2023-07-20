@@ -5,6 +5,7 @@ from datetime import timedelta
 from airflow.utils.dates import days_ago
 from Jobs_Extract import job_extraction
 from Jobs_Upload import load_jobs
+from Jobs_Transform import job_transform
 
 
 args = {
@@ -33,9 +34,14 @@ with DAG(
         python_callable=job_extraction
     )
 
+    task_transform_jobs = PythonOperator(
+        task_id='transform_jobs',
+        python_callable=job_transform
+    )
+
     task_upload_jobs = PythonOperator(
         task_id='upload_jobs',
         python_callable=load_jobs
     )
 
-    task_extract_jobs >> task_upload_jobs
+    task_extract_jobs >> task_transform_jobs >> task_upload_jobs
