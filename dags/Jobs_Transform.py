@@ -51,6 +51,7 @@ def job_transform():
   df = pd.read_csv('/opt/airflow/dags/data/LIJobs_working.csv')
   df = salary_finder(df)
   df = skill_picker(df)
+  df.drop(columns=['Description'], inplace=True)
   df.to_csv(f'/opt/airflow/dags/data/LIJobs_final.csv', index=False)
 
 
