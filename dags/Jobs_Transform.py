@@ -47,11 +47,37 @@ def skill_picker(df):
     df[key] = df.Description.apply(lambda x: any(n.lower() in x.lower() for n in vals))
   return df
 
+def job_title_standard(df):
+  standard_titles = []
+  for i in df.Title:
+    i = i.lower()
+    if 'engineer' in i:
+      if 'software' in i:
+          standard_titles.append('Software Engineer')
+      elif 'data' in i:
+          standard_titles.append('Data Engineer')
+      elif 'system' in i:
+          standard_titles.append('System Engineer')
+      elif 'application' in i:
+          standard_titles.append('Application Engineer')
+      elif 'frontend' in i or 'front end' in i:
+          standard_titles.append('Frontend Engineer')
+      elif 'backend' in i or 'back end' in i:
+          standard_titles.append('Backend Engineer')
+      else:
+          standard_titles.append('Engineer - Other')
+    else:
+      standard_titles.append('Other')
+  df['Title_Standard'] = standard_titles
+  return df
+
+
 def job_transform():
   df = pd.read_csv('/opt/airflow/dags/data/LIJobs_working.csv')
   df = salary_finder(df)
   df = skill_picker(df)
   df.drop(columns=['Description'], inplace=True)
+  df = job_title_standard(df)
   df.to_csv(f'/opt/airflow/dags/data/LIJobs_final.csv', index=False)
 
 
